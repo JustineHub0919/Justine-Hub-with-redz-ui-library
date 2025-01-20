@@ -1888,4 +1888,61 @@ function redzlib:MakeWindow(Configs)
         return Window
 end
 
+local function createNotification(title, message, imageId)
+    -- Create a ScreenGui if one doesn't already exist
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    -- Create an ImageLabel for the notification background
+    local frame = Instance.new("ImageLabel")
+    frame.Size = UDim2.new(0, 400, 0, 120)  -- Notification size
+    frame.Position = UDim2.new(1, -420, 1, -140)  -- Bottom-right corner position
+    frame.Image = imageId  -- Use provided image ID
+    frame.ScaleType = Enum.ScaleType.Stretch
+    frame.BackgroundTransparency = 1
+    frame.Parent = screenGui
+
+    -- Add rounded corners
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = frame
+
+    -- Create the title label (centered at the top)
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, -20, 0, 30)
+    titleLabel.Position = UDim2.new(0, 10, 0, 10)
+    titleLabel.Text = title
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.TextSize = 22
+    titleLabel.TextWrapped = true
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Center
+    titleLabel.Parent = frame
+
+    -- Create the message label (centered below the title)
+    local messageLabel = Instance.new("TextLabel")
+    messageLabel.Size = UDim2.new(1, -20, 0, 60)
+    messageLabel.Position = UDim2.new(0, 10, 0, 50)
+    messageLabel.Text = message
+    messageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    messageLabel.BackgroundTransparency = 1
+    messageLabel.Font = Enum.Font.Gotham
+    messageLabel.TextSize = 18
+    messageLabel.TextWrapped = true
+    messageLabel.TextXAlignment = Enum.TextXAlignment.Center
+    messageLabel.TextYAlignment = Enum.TextYAlignment.Center
+    messageLabel.Parent = frame
+
+    -- Auto-remove notification after 5 seconds
+    task.delay(5, function()
+        frame:TweenPosition(UDim2.new(1, 10, 1, -140), "Out", "Quad", 0.5, true, function()
+            frame:Destroy()
+        end)
+    end)
+end
+
+-- Example usage
+createNotification("Server Update", "The server will restart in 5 minutes.", "rbxassetid://1234567890")
+
 return redzlib
