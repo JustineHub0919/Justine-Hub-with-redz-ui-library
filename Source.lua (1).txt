@@ -102,8 +102,6 @@ local redzlib = {
         UISize = {400, 300},
         TabSize = 170,
         Theme = "Yellow" -- Change this to "Red", "Blue", "Green", "Yellow", "Purple", "Dark", or "Darker"
-    }
-}
 	},
 	Settings = {},
 	Connection = {},
